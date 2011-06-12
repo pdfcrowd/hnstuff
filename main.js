@@ -4,6 +4,7 @@ rest = require('restler');
 pdfcrowd = require('pdfcrowd');
 fs = require('fs');
 http = require('http');
+spawn = require('child_process').spawn;
 
 //
 // initialization & global variables
@@ -191,6 +192,7 @@ function sendCachedPDF(res, username, callback) {
             cachedPdfStream.pipe(res);
         });
         cachedPdfStream.on('end', function() {
+            spawn('touch', [name.cachedPath]);
             callback(true);
         });
     } else {
