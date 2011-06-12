@@ -1,0 +1,89 @@
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>The Best of <%= username %> on Hacker News</title>
+  <style>
+body {
+    font-family: Verdana, sans-serif;
+    margin: 0;
+    background-color: white;
+}
+#first-page {
+    text-align: center;
+    page-break-after: always;
+    margin-top: 100pt;
+}
+
+#first-page-inner {
+    display: inline-block;
+    background-color: #f60;
+    color: white;
+    padding: 6em;
+
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
+}
+
+#report-title { font-size: 36pt; margin-bottom: 0;}
+#report-subtitle { font-size: 16pt; line-heigt: 2;}
+#twitter-img { margin-top: 3em; }
+
+#charts { padding-top: 2em; page-break-after: always; }
+#charts p { text-align: center; }
+#chart-title { font-size:28pt; color:#222; }
+img.chart {border: 1px solid #ddd; padding: 40px 30px;}
+#chart-comment {font-size:smaller;color:#777;}
+
+#comments-wrapper { font-size: 10pt; color: black; margin-top: 1.5em; }
+.comment { margin-bottom: 3em; }
+.comment-header { color: #828282; }
+.comment-rank { font-weight: bold; color: #444; }
+.comment a:link,
+.comment a:visited { color: #828282; }
+#comments-wrapper p { margin: 0; }
+  </style>
+</head>
+
+<body>
+  <div id="first-page">
+    <div id="first-page-inner">
+      <div id="report-title">The Best of <%= username %></div>
+      <div id="report-subtitle"><%= username %>'s top <%= num_comments %> comments on Hacker News</div>
+      <% if (twitter_image !== null) { %>
+      <div id="twitter-img">
+        <a href="http://twitter.com/<%= twitter_username %>">
+          <img src="<%= twitter_image%>" width="73" height="73" />
+        </a>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  
+  <div id="charts">
+    <p id="chart-title">Distribution of Comments<p>
+    <p>
+      <img class="chart" src="<%= chart1 %>" />
+    </p>
+    <p id="chart-comment">The size of the marker is proportional to the comment length</p>
+  </div>
+  
+  <div id="comments-wrapper">
+    <% _.each(results, function(r, i) { %>
+    <div class="comment">
+      <div class="comment-header">
+        <span class="comment-rank">#<%= i+1 %></span>, points: <%= (r.item.points === null) ? "-" : r.item.points %>,
+        <%= r.item.create_ts.slice(0,10) %>,
+        <a href="http://news.ycombinator.com/item?id=<%= r.item.id %>">link</a>,
+        <a href="http://news.ycombinator.com/item?id=<%= r.item.parent_id %>">parent</a>,
+        <% if (r.item.discussion !== null) { %>
+        on: <a href="http://news.ycombinator.com/item?id=<%= r.item.discussion.id %>"><%= r.item.discussion.title %></a>
+        <% } %>
+      </div>
+      <div class="comment-text">
+        <%= r.item.text %>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</body>

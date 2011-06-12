@@ -1,0 +1,69 @@
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>The Best of $username on Hacker News</title>
+  <meta name="description" content="Create an E-book from the best comments on Hacker News">
+  <style>
+    body { margin: 0; padding: 0; background-color: #f60; color: white; font-family: Verdana,sans-serif;}
+    table { border-collapse: collapse; }
+    td { border: none; padding: 10px; }
+    input {font-size: normal;}
+    h1 { font-size: 2em; }
+    #form-row a:link, 
+    #form-row a:visited { text-decoration: none; color: white; }
+    #form-row a:hover { text-decoration: underline; }
+
+    #about-row a:link, 
+    #about-row a:visited { text-decoration: none; color: white; }
+    #about-row a:hover { text-decoration: underline; }
+
+    #error { font-size:smaller; font-weight:bold; text-align: center; margin-top: 3em; height: 3em;}
+    #error span { background-color: red; color: white; padding: 4px 5px;}
+  </style>
+</head>
+
+<body>
+<table width="100%" height="100%" cellspacing="0">
+  <tr height="10%">
+    <td></td>
+  </tr>
+  <tr id="form-row">
+    <td style="text-align: center; vertical-align:top ">
+      <h1>The Best of</h1>
+      <form action="" method="post">
+        <strong>Username</strong> <input id="username-input" type="text" name="username" />
+
+        <% if (c.debug === "1") { %>
+
+        <br /><br />HTML <input type="radio" name="output" value="html" />
+        PDF <input type="radio" name="output" value="pdf" checked /> <br /><br />
+
+        <% } %>
+
+        <input type="submit" value="Create E-book" />
+      </form>
+      <h1>on <a href="http://news.ycombinator.com/">Hacker News</a></h1>
+
+      <div id="error">
+        <% if (c.error !== undefined) { %>
+        <span><%= c.error %></span>
+        <% } %>
+      </div>
+    </td>
+  </tr>
+  <tr id="about-row" height="10%">
+    <td style="text-align: right; vertical-align: bottom; font-size: smaller;">
+      <a href="http://github.com/pdfcrowd/">source</a> * 
+      <a href="mailto:redpill27@gmail.com">feedback</a> * 
+      powered by <a href="http://www.hnsearch.com/api">hnsearch</a> and 
+      <a href="http://pdfcrowd.com/html-to-pdf-api/">pdfcrowd</a></td>
+  </tr>
+
+</table>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script> 
+<script>
+  $(function() {
+      $('#username-input').focus();
+      $('form').submit(function() { $('#error').empty(); });
+  });
+</script>
+</body>
