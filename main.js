@@ -181,8 +181,6 @@ function getPdfNames(username) {
 function sendCachedPDF(res, username, callback) {
     name = getPdfNames(username);
     if (cfg.useCache) {
-        var pdfName = username + '.pdf'
-
         var cachedPdfStream = fs.createReadStream(name.cachedPath);
         cachedPdfStream.on('error', function(err) {
             callback(false);
@@ -232,7 +230,7 @@ function getCachedPdfWriteStream(name) {
 
 
 //
-// Creates the pdf and send is back to the client. The generated pdf
+// Creates the pdf and send it back to the client. The generated pdf
 // is cached if the cache is enabled.
 function sendPdfReport(req, res, reportData) {
     var client = new pdfcrowd.Pdfcrowd(cfg.pdfcrowdAccount.username,
