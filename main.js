@@ -318,16 +318,12 @@ function createCharts(data) {
     var pointsMax = _.max([0, pointsMax + 5]);
     var pointsMin = _.min(points);
     pointsMin = _.max([0, pointsMin - 5]);
-
     var lengths = _.map(arr, function(item) { return 1000+item[2]; });
 
 
-    endDate += milisecMonth;
-
     // date labels
+    endDate += milisecMonth;
     var dateLabels = generateDateLabels(startDate, endDate, 6);
-
-    // tbd no sort, just min and max
     startDate -= milisecMonth;
     var span = endDate - startDate;
 
