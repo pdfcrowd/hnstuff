@@ -56,7 +56,7 @@ def publish():
         sudo('sed "s|PROJECT_DIR|`pwd`|g" conf/hnbestof.supervisor.conf | sudo tee %(superv_conf)s > /dev/null' % env)
         sudo('rm -f %(nginx_http_conf)s %(nginx_server_conf)s' % env)
         sudo('ln -s `pwd`/conf/nginx_http.conf %(nginx_http_conf)s' % env)
-        sudo('ln -s `pwd`/conf/nginx_server.conf %(nginx_server_conf)s' % env)
+        sudo('sed "s|PROJECT_DIR|`pwd`|g" conf/nginx_server.conf | sudo tee %(nginx_server_conf)s > /dev/null' % env)
         sudo('kill -HUP `cat /var/run/nginx.pid`')
         sudo('supervisorctl update')
         sudo('supervisorctl restart hnbestof')

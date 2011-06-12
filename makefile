@@ -13,7 +13,7 @@ update-app-config:
 	sed "s|PROJECT_DIR|`pwd`|g" conf/hnbestof.supervisor.conf | sudo tee $(SUPERV_CONF) > /dev/null
 	sudo rm -f $(NGINX_HTTP_CONF) $(NGINX_SERVER_CONF)
 	sudo ln -s `pwd`/conf/nginx_http.conf $(NGINX_HTTP_CONF)
-	sudo ln -s `pwd`/conf/nginx_server.conf $(NGINX_SERVER_CONF)
+	sed "s|PROJECT_DIR|`pwd`|g" conf/nginx_server.conf | sudo tee $(NGINX_SERVER_CONF) > /dev/null
 	sudo kill -HUP `cat /var/run/nginx.pid`
 	sudo supervisorctl update
 	sudo supervisorctl restart hnbestof
