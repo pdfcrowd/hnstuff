@@ -10,6 +10,9 @@ env.nginx_conf = "/etc/nginx/applications/rootdomain_50_hnbestof"
 env.superv_conf = "/etc/supervisord.d/hnbestof.conf"
 env.prune_cache = "%(www_root)s/prune_cache.sh" % env
 
+#http://docs.fabfile.org/en/1.0.1/faq.html#why-do-i-sometimes-see-err-stdin-is-not-a-tty
+env.shell = env.shell.replace('-l', '') 
+
 
 def stage():
     env.user = 'user'
