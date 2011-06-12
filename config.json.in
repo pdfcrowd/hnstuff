@@ -1,7 +1,7 @@
 {
     "pdfcrowdAccount": {
-        "username": "",
-        "apikey": ""
+        "username": "username",
+        "apikey": "apikey"
     },
 
     "useCache": true,
