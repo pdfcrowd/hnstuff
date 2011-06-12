@@ -1,4 +1,6 @@
-NGINX_CONF= /etc/nginx/applications/rootdomain_50_hnbestof.nginx.conf
+NGINX_HTTP_CONF= /etc/nginx/applications/root_http_50_hnbestof.conf
+NGINX_SERVER_CONF= /etc/nginx/applications/root_server_50_hnbestof.conf
+
 SUPERV_CONF= /etc/supervisord.d/hnbestof.supervisor.conf
 
 clean-cache:
@@ -9,8 +11,9 @@ compile:
 
 update-app-config:
 	sed "s|PROJECT_DIR|`pwd`|g" conf/hnbestof.supervisor.conf | sudo tee $(SUPERV_CONF) > /dev/null
-	sudo rm -f $(NGINX_CONF)
-	sudo ln -s `pwd`/conf/hnbestof.nginx.conf $(NGINX_CONF)
+	sudo rm -f $(NGINX_HTTP_CONF) $(NGINX_SERVER_CONF)
+	sudo ln -s `pwd`/conf/nginx_http.conf $(NGINX_HTTP_CONF)
+	sudo ln -s `pwd`/conf/nginx_server.conf $(NGINX_SERVER_CONF)
 	sudo kill -HUP `cat /var/run/nginx.pid`
 	sudo supervisorctl update
 	sudo supervisorctl restart hnbestof
