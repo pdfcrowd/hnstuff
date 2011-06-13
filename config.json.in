@@ -6,6 +6,6 @@
 
     "useCache": true,
     "port": 8081,
-    "baseUrl": "/(?:hnbestof)?"
+    "baseUrl": "/(?:hn)?"
 }
 
