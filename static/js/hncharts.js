@@ -1,3 +1,8 @@
+//
+//  Copyright (c) 2011 <redpill27@gmail.com>
+//  This code is freely distributable under the MIT license
+//
+
 var hncharts = {
     init: function() {
         this.chartXScale = 300;
