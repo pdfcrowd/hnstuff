@@ -9,7 +9,7 @@ env.cache_dir = "%(project_root)s/var/cached-reports/" % env
 env.nginx_http_conf = "/etc/nginx/applications/root_http_50_hnbestof.conf"
 env.nginx_server_conf = "/etc/nginx/applications/root_server_50_hnbestof.conf"
 env.superv_conf = "/etc/supervisord.d/hnbestof.conf"
-env.prune_cache = "%(www_root)s/prune_cache.sh" % env
+env.prune_cache = "%(project_root)s/prune_cache.sh" % env
 
 #http://docs.fabfile.org/en/1.0.1/faq.html#why-do-i-sometimes-see-err-stdin-is-not-a-tty
 env.shell = env.shell.replace('-l', '') 
