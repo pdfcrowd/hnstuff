@@ -29,5 +29,5 @@ init:
 	sudo chmod g+w var/cached-reports
 
 test-server:
-	node main.js
+	node best_of_ebook.js
 
