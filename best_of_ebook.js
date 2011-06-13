@@ -1,4 +1,4 @@
-_ = require('./js/underscore');
+_ = require('./static/js/underscore');
 assert = require('assert');
 rest = require('restler');
 pdfcrowd = require('pdfcrowd');
