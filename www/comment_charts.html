@@ -1,0 +1,29 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  </head>
+  <body>
+    <p>
+      <form>
+        username <input type="text" id="username"> <br />
+        <input type="button" onclick="hn.generateChart()" value="generate" />
+      </form>
+    </p>
+
+    <div id="chart" style="display:none">
+      <img></img><br/>
+      <a href="#">permalink</a>
+    </div>
+    
+    <div id="comments-wrapper">
+    </div>
+    
+    <p id="query-result">
+    </p>
+     
+     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+     <script type="text/javascript" src="/hn/static/js/underscore-min.js"></script>
+     <script type="text/javascript" src="/hn/static/js/hncharts.js"></script>
+     <script type="text/javascript" src="/hn/static/js/comment_charts.js"></script>
+  </body>
+</html>
