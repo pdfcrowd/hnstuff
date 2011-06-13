@@ -41,7 +41,7 @@ app.configure(function() {
 
 //
 // main GET
-app.get(cfg.baseUrl, function(req, res) {
+app.get("/hn/best-of-ebook", function(req, res) {
     res.end(indexTemplate(getTemplateContext(req)));
 });
 
@@ -59,7 +59,7 @@ function getTemplateContext(req) {
 
 //
 // main POST
-app.post(cfg.baseUrl, function(req, res) {
+app.post("/hn/best-of-ebook", function(req, res) {
     m = checkUsername.exec(req.body.username);
     if (m === null) {
         renderErrorResponse(req, res, "Enter a valid username");
