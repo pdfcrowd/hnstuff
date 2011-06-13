@@ -1,10 +1,12 @@
 _ = require('./static/js/underscore');
+hncharts = require('./static/js/hncharts');
 assert = require('assert');
 rest = require('restler');
 pdfcrowd = require('pdfcrowd');
 fs = require('fs');
 http = require('http');
 spawn = require('child_process').spawn;
+
 
 //
 // initialization & global variables
@@ -110,7 +112,7 @@ function processReportRequest(req, res, username, onDone) {
         if (data.hits > 0) {
             data.username = username;
             data.num_comments = data.results.length;
-            _.extend(data, createCharts(data));
+            _.extend(data, {chart1: hncharts.commentLengthAndPoints(data)});
             reportData = data;
         } else {
             errorMsg = "No comments found";
@@ -272,82 +274,6 @@ function sendPdfReport(req, res, reportData) {
 
 
 
-//
-// Charts
-//
-var chartXScale = 300;
-var milisecMonth = 1000 * 60 * 60 * 24 * 31;
-
-function generateDateLabels(start, end, num) {
-    function normalize(date) {
-        var normalizedDate = new Date(date);
-        normalizedDate.setUTCDate(1);
-        normalizedDate.setUTCHours(0, 0, 0, 0);
-        return normalizedDate;
-    }
-
-    var delta = _.max([milisecMonth, (end - start) / (num - 1)]);
-    return _.select(_.map(_.range(num), function(n) {
-        return normalize(start + n * delta);
-    }), function(n) { return n.getTime()<=end; });
-}
-
-var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
-              'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-
-function createCharts(data) {
-    var arr = [];
-    var startDate = 1e+30;
-    var endDate = 0;
-
-    // search API results -> [[date, points, commentLength], ...]
-    _.each(data.results, function(r) {
-        if (r.item.points !== null) {
-            var date = new Date(r.item.create_ts)
-
-            if (date.getTime() < startDate) {
-                startDate = date.getTime();
-            } else if (date.getTime() > endDate) endDate = date.getTime();
-
-            arr.push([date, r.item.points, r.item.text.length]);
-        }
-    });
-
-    var points = _.map(arr, function(item) { return item[1]; });
-    var pointsMax = _.max(points);
-    var pointsMax = _.max([0, pointsMax + 5]);
-    var pointsMin = _.min(points);
-    pointsMin = _.max([0, pointsMin - 5]);
-    var lengths = _.map(arr, function(item) { return 1000+item[2]; });
-
-
-    // date labels
-    endDate += milisecMonth;
-    var dateLabels = generateDateLabels(startDate, endDate, 6);
-    startDate -= milisecMonth;
-    var span = endDate - startDate;
-
-    dateLabels = _.map(dateLabels, function(l) {
-        return [Math.round(chartXScale * (l.getTime() - startDate)/span),
-                months[l.getUTCMonth()] + (l.getUTCFullYear())];
-    });
-
-    var scaledTimeStamps = _.map(arr, function(item) {
-        return Math.round(chartXScale * (item[0].getTime() - startDate) / span);
-    });
-
-    var options = [
-        "cht=s&chs=640x400&chxt=x,y,y&chm=o,00A287A0,0,-1,40,-0.5",
-        "chxl=2:|Points|0:|" + _.map(dateLabels, function(d) { return d[1]; }).join("|"),
-        "chxp=2,50|0," + _.map(dateLabels, function(d) { return d[0]; } ).join(","),
-        "chxr=0,0," + chartXScale + "|1," + pointsMin + "," + pointsMax,
-        "chds=0," + chartXScale + "," + pointsMin + "," + pointsMax + ",0,10000",
-        "chd=t:" + scaledTimeStamps.join(',') + '|' + 
-            points.join(',') + '|' + lengths.join(',')
-    ]
-        
-    data.chart1 = "https://chart.googleapis.com/chart?" + options.join('&');
-}
 
 console.log("[%d] listening on %d", process.pid, port);
 app.listen(port);
