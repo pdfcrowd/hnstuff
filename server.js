@@ -3,8 +3,8 @@
 //  This code is freely distributable under the MIT license
 //
 
-_ = require('./static/js/underscore');
-hncharts = require('./static/js/hncharts');
+_ = require('./www/js/underscore');
+hncharts = require('./www/js/hncharts');
 assert = require('assert');
 rest = require('restler');
 pdfcrowd = require('pdfcrowd');
