@@ -28,6 +28,11 @@ var hn = {
         // detach the map and jsonp-script nodes
         $(this.scriptNode).detach();
         $("#chart-map").detach();
+        $("#comments-wrapper").empty();
+        if (data.hits === 0) {
+            $("#chart").css("display", "none");
+            return;
+        }
         // retrieve the img map from the server
         var imgQs = hncharts.commentLengthAndPoints(data);
         var imgUrl = "http://chart.googleapis.com/chart?" + imgQs
