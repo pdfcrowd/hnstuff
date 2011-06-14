@@ -27,7 +27,7 @@ var hncharts = {
     },
 
 
-    commentLengthAndPoints: function(data) {
+    commentLengthAndPoints: function(data, title) {
         var that = this;
         var arr = [];
         var startDate = 1e+30;
@@ -77,7 +77,11 @@ var hncharts = {
             "chds=0," + this.chartXScale + "," + pointsMin + "," + pointsMax + ",0,10000",
             "chd=t:" + scaledTimeStamps.join(',') + '|' + 
                 points.join(',') + '|' + lengths.join(',')
-        ]
+        ];
+
+        if (title !== undefined) {
+            options.push("chtt=" + title);
+        }
         
         return options.join('&');
     }

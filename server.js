@@ -54,7 +54,11 @@ app.get("/hn/chart-map.json", function(req, res) {
     res.contentType('application/json');
     req.query.chof = "json";
 
-    var qs = _.map(req.query, function(k,v) { return v + "=" + k; }).join('&')
+    var qs = _.map(req.query, function(k,v) { 
+        return v + "=" + k; 
+    }).join('&');
+    // the title may contain spaces - replace them with +
+    qs = qs.replace(/ /g, '+');
 
     http.get({
         host: "chart.googleapis.com",

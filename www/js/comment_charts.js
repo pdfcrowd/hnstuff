@@ -37,10 +37,12 @@ var hn = {
             return;
         }
         // retrieve the img map from the server
-        var imgQs = hncharts.commentLengthAndPoints(data);
+        var title = "The+Best+of+" + 
+            ((data.request.filter.fields.username !== undefined) ? data.request.filter.fields.username[0] : "Hacker News");
+        var imgQs = hncharts.commentLengthAndPoints(data, title);
         var imgUrl = "http://chart.googleapis.com/chart?" + imgQs
         var that = this;
-        $.getJSON("/hn/chart-map.json?" + imgQs, function(data) {
+        $.getJSON("/hn/chart-map.json?" + "chof=validate&" + imgQs, function(data) {
             if (data.chartshape !== undefined) {
                 $(that.imageMapTemplate({
                     data : _.select(data.chartshape, function(item) { return item.type === "CIRCLE";})
