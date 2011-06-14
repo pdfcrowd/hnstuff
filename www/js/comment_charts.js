@@ -10,7 +10,8 @@ var hn = {
             "filter[fields][username][]=" + username,
             "filter[fields][type][]=comment",
             "sortby=points desc",
-            "limit=100" ];
+            "limit=" + parseInt($("#limit").val(),10)
+        ];
         var qs = fields.join('&');
 
         this.scriptNode = document.createElement('script');
@@ -55,10 +56,11 @@ var hn = {
         this.commentsTemplate = _.template('<% _.each(results, function(r, i) { %> \
     <div class="comment"> \
       <div class="comment-header"><a name="c<%= i+1 %>" /> \
-        <span class="comment-rank">#<%= i+1 %></span>, points: <%= (r.item.points === null) ? "-" : r.item.points %>, \
-        <%= r.item.create_ts.slice(0,10) %>, \
-        <a href="http://news.ycombinator.com/item?id=<%= r.item.id %>">link</a>, \
-        <a href="http://news.ycombinator.com/item?id=<%= r.item.parent_id %>">parent</a>, \
+        <span class="comment-rank">#<%= i+1 %></span>, <%= (r.item.points === null) ? "-" : r.item.points %> points \
+        by <a href="http://news.ycombinator.com/user?id=<%= r.item.username %>"><%= r.item.username %></a> | \
+        <%= r.item.create_ts.slice(0,10) %> | \
+        <a href="http://news.ycombinator.com/item?id=<%= r.item.id %>">link</a> | \
+        <a href="http://news.ycombinator.com/item?id=<%= r.item.parent_id %>">parent</a> | \
         <% if (r.item.discussion !== null) { %> \
         on: <a href="http://news.ycombinator.com/item?id=<%= r.item.discussion.id %>"><%= r.item.discussion.title %></a> \
         <% } %> \

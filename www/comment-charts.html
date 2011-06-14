@@ -1,29 +1,77 @@
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+      body { font-family: verdana, sans-serif; background-color: #F6F6EF; padding: 0; margin: 0;}
+      #body-wrapper { padding: 0 2em 1em 2em; }
+      #form-wrapper table { margin: 0; background-color: #f60; font-size: smaller; padding: 5px; }
+      form { margin: 0; }
+      h2 { color: #444; }
+      #chart { margin: 0 0 3em 0; }
+      #chart img { border: 1px solid #ddd; padding: 10px; background-color: white; }
+      #chart, form { text-align: center; }
+
+#comments-wrapper { font-size: 10pt; color: black; margin-top: 1.5em; }
+.comment { margin-bottom: 3em; }
+.comment-header { color: #828282; }
+.comment-header  a:link,
+.comment-header  a:visited { color: #828282; text-decoration: none; }
+.comment-header  a:hover { text-decoration: underline; }
+
+.comment-rank { font-weight: bold; color: #444; }
+.comment a:link,
+.comment a:visited { color: #828282; }
+#comments-wrapper p { margin: 0; }
+
+    </style>
   </head>
   <body>
-    <p>
-      <form>
-        username <input type="text" id="username"> <br />
-        <input type="button" onclick="hn.generateChart()" value="generate" />
-      </form>
-    </p>
-
-    <div id="chart" style="display:none">
-      <img usemap="#chart-map"></img><br/>
-      <a href="#">permalink</a>
+    <div id="form-wrapper">
+      <table width="100%" cellspacing="0">
+        <tr>
+          <td></td>
+          <td style="text-align: center;">
+            <form>
+              <select name="limit" id="limit">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50" selected>50</option>
+                <option value="75">75</option>
+                <option value="100">100</option>
+              </select>
+              
+              <select name="filter" id="filter">
+                <option value="best">best</option>
+                <option value="worst">worst</option>
+                <option value="first">first</option>
+                <option value="last">last</option>
+              </select>
+              
+              comments by <input type="text" id="username">
+              <input type="button" onclick="hn.generateChart()" value="show" />
+            </form>
+          </td>
+          <td style="text-align: right; padding-right: 20px; color: white;">info</td>
+        </tr>
+      </table>
     </div>
     
-    <div id="comments-wrapper">
-    </div>
+    <div id="body-wrapper">
+      <div id="chart" style="display:none">
+        <h2>Distribution of Comments</h2>
+        <img usemap="#chart-map"></img><br/>
+      </div>
     
-    <p id="query-result">
-    </p>
-     
+      <div id="comments-wrapper">
+      </div>
+      
+      <p id="query-result">
+      </p>
+    </div>
+      
      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-     <script type="text/javascript" src="/hn/static/js/underscore-min.js"></script>
-     <script type="text/javascript" src="/hn/static/js/hncharts.js"></script>
-     <script type="text/javascript" src="/hn/static/js/comment_charts.js"></script>
+     <script type="text/javascript" src="js/underscore-min.js"></script>
+     <script type="text/javascript" src="js/hncharts.js"></script>
+     <script type="text/javascript" src="js/comment_charts.js"></script>
   </body>
 </html>
