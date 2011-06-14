@@ -147,9 +147,7 @@ function processReportRequest(req, res, username, onDone) {
         if (data.hits > 0) {
             data.username = username;
             data.num_comments = data.results.length;
-            var title = "The+Best+of+" + 
-                ((data.request.filter.fields.username !== undefined) ? data.request.filter.fields.username[0] : "Hacker+News");
-            var imgQs = hncharts.commentLengthAndPoints(data, title);
+            var imgQs = hncharts.commentLengthAndPoints(data, hncharts.getChartTitle(data));
             var imgUrl = "https://chart.googleapis.com/chart?" + imgQs;
             _.extend(data, {chart1: imgUrl});
             reportData = data;

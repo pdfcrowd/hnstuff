@@ -84,7 +84,15 @@ var hncharts = {
         }
         
         return options.join('&');
+    },
+
+    getChartTitle: function(data) {
+        return "The+Best+of+" + 
+            ((data.request.filter.fields.username !== undefined) 
+             ? data.request.filter.fields.username[0] 
+             : "Hacker+News");
     }
+    
     
 };
 
