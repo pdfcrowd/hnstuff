@@ -39,6 +39,8 @@ img.chart {border: 1px solid #ddd; padding: 40px 30px;}
 .comment { margin-bottom: 3em; }
 .comment-header { color: #828282; }
 .comment-rank { font-weight: bold; color: #444; }
+.comment-header a:link,
+.comment-header a:visited { color: #828282; text-decoration: none}
 .comment a:link,
 .comment a:visited { color: #828282; }
 #comments-wrapper p { margin: 0; }
@@ -77,10 +79,11 @@ img.chart {border: 1px solid #ddd; padding: 40px 30px;}
     <% _.each(results, function(r, i) { %>
     <div class="comment">
       <div class="comment-header">
-        <span class="comment-rank">#<%= i+1 %></span>, points: <%= (r.item.points === null) ? "-" : r.item.points %>,
-        <%= r.item.create_ts.slice(0,10) %>,
-        <a href="http://news.ycombinator.com/item?id=<%= r.item.id %>">link</a>,
-        <a href="http://news.ycombinator.com/item?id=<%= r.item.parent_id %>">parent</a>,
+        <span class="comment-rank">#<%= i+1 %></span>, <%= (r.item.points === null) ? "-" : r.item.points %> points
+        by <a href="http://news.ycombinator.com/user?id=<%= r.item.username %>"><%= r.item.username %></a> |
+        <%= r.item.create_ts.slice(0,10) %> |
+        <a href="http://news.ycombinator.com/item?id=<%= r.item.id %>">link</a> |
+        <a href="http://news.ycombinator.com/item?id=<%= r.item.parent_id %>">parent</a> |
         <% if (r.item.discussion !== null) { %>
         on: <a href="http://news.ycombinator.com/item?id=<%= r.item.discussion.id %>"><%= r.item.discussion.title %></a>
         <% } %>
