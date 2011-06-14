@@ -65,7 +65,7 @@ function getTemplateContext(req) {
 
 
 //
-// main POST
+// create ebook
 app.post("/hn/best-of-ebook", function(req, res) {
     m = checkUsername.exec(req.body.username);
     if (m === null) {
@@ -117,7 +117,9 @@ function processReportRequest(req, res, username, onDone) {
         if (data.hits > 0) {
             data.username = username;
             data.num_comments = data.results.length;
-            _.extend(data, {chart1: hncharts.commentLengthAndPoints(data)});
+            var imgQs = hncharts.commentLengthAndPoints(data);
+            var imgUrl = "https://chart.googleapis.com/chart?" + imgQs;
+            _.extend(data, {chart1: imgUrl});
             reportData = data;
         } else {
             errorMsg = "No comments found";

@@ -79,7 +79,7 @@ var hncharts = {
                 points.join(',') + '|' + lengths.join(',')
         ]
         
-        return "https://chart.googleapis.com/chart?" + options.join('&');
+        return options.join('&');
     }
     
 };
