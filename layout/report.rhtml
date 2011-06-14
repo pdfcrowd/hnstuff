@@ -48,8 +48,13 @@ img.chart {border: 1px solid #ddd; padding: 40px 30px;}
 <body>
   <div id="first-page">
     <div id="first-page-inner">
+      <% if (username !== '') { %>
       <div id="report-title">The Best of <%= username %></div>
       <div id="report-subtitle"><%= username %>'s top <%= num_comments %> comments on Hacker News</div>
+      <% } else { %>
+        <div id="report-title">The Best of Hacker News</div>
+        <div id="report-subtitle">Top <%= num_comments %> comments on Hacker News</div>
+      <% } %>
       <% if (twitter_image !== null) { %>
       <div id="twitter-img">
         <a href="http://twitter.com/<%= twitter_username %>">

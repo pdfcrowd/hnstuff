@@ -29,7 +29,7 @@ function readStaticResources() {
 
 readStaticResources();
 var parseTwitterUsername = /twitter.com\/([a-zA-Z0-9_]{1,15})| @([a-zA-Z0-9_]{1,15})/i;
-var checkUsername = /^ *([a-zA-Z0-9_]+) *$/;
+var checkUsername = /^ *([a-zA-Z0-9_]*) *$/;
 var reportCacheDir = __dirname + '/var/cached-reports/';
 var port = process.argv.length == 3 ? parseInt(process.argv[2], 10) : cfg.port;
 
@@ -147,19 +147,23 @@ function processReportRequest(req, res, username, onDone) {
         if (data.hits > 0) {
             data.username = username;
             data.num_comments = data.results.length;
-            var imgQs = hncharts.commentLengthAndPoints(data);
+            var title = "The+Best+of+" + 
+                ((data.request.filter.fields.username !== undefined) ? data.request.filter.fields.username[0] : "Hacker+News");
+            var imgQs = hncharts.commentLengthAndPoints(data, title);
             var imgUrl = "https://chart.googleapis.com/chart?" + imgQs;
             _.extend(data, {chart1: imgUrl});
             reportData = data;
         } else {
             errorMsg = "No comments found";
         }
-    })
+    });
 
     // Get user profile from the search API, search for twitter info
     // and if found then get the twitter image URL.
     //
     // Errors are ignored here -> twitter profile image will be missing.
+    //
+    // TBD: suboptimal, since the request is sent even if username is ''
     rest.get("http://api.thriftdb.com/api.hnsearch.com/users/_search", {
         query: {"filter[fields][username][]" : username},
         parser: rest.parsers.json
@@ -208,6 +212,7 @@ function processReportRequest(req, res, username, onDone) {
 }
 
 function getPdfNames(username) {
+    username = (username !== '') ? username : 'Hacker News';
     return {
         pdf: username + '.pdf',
         cachedPath: reportCacheDir + username + '.pdf'
