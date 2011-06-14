@@ -4,7 +4,7 @@ NGINX_SERVER_CONF= /etc/nginx/applications/root_server_50_hnstuff.conf
 SUPERV_CONF= /etc/supervisord.d/hnstuff.supervisor.conf
 
 clean-cache:
-	rm var/cached-reports/*
+	rm -f var/cached-reports/*
 
 compile:
 	@java -jar /usr/share/java/compiler.jar --js=main.js > /dev/null
