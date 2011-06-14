@@ -47,7 +47,33 @@ app.configure(function() {
 
 
 //
-// main GET
+// Call the google chart api and return an image json map, This can't
+// be done on the client side since the chart api does not support
+// jsonp.
+app.get("/hn/chart-map.json", function(req, res) {
+    res.contentType('application/json');
+    req.query.chof = "json";
+
+    var qs = _.map(req.query, function(k,v) { return v + "=" + k; }).join('&')
+
+    http.get({
+        host: "chart.googleapis.com",
+        port: 80,
+        path: "/chart?" + qs
+    }, function(chartResp) {
+        chartResp.on('data', function(chunk) {
+            res.write(chunk);
+        }).on('end', function() {
+            res.end();
+        });
+    }).on('error', function(e) {
+        res.end('{"chartshape": [], "error": "' + e.toString() + '"}');            
+    });
+});
+
+
+//
+// ebook main GET
 app.get("/hn/best-of-ebook", function(req, res) {
     res.end(indexTemplate(getTemplateContext(req)));
 });
