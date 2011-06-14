@@ -15,19 +15,20 @@
       #form-wrapper a:visited { color: white; text-decoration: none }
       #form-wrapper a:hover { text-decoration: underline; }
 
+      #error { font-size:smaller; font-weight:bold; text-align: center; margin-top: 1.5em; }
+      #error span { background-color: red; color:white; padding: 4px 5px;}
 
-#comments-wrapper { font-size: 10pt; color: black; margin-top: 1.5em; }
-.comment { margin-bottom: 3em; }
-.comment-header { color: #828282; }
-.comment-header  a:link,
-.comment-header  a:visited { color: #828282; text-decoration: none; }
-.comment-header  a:hover { text-decoration: underline; }
+      #comments-wrapper { font-size: 10pt; color: black; margin-top: 1.5em; }
+      .comment { margin-bottom: 3em; }
+      .comment-header { color: #828282; }
+      .comment-header  a:link,
+      .comment-header  a:visited { color: #828282; text-decoration: none; }
+      .comment-header  a:hover { text-decoration: underline; }
 
-.comment-rank { font-weight: bold; color: #444; }
-.comment a:link,
-.comment a:visited { color: #828282; }
-#comments-wrapper p { margin: 0; }
-
+      .comment-rank { font-weight: bold; color: #444; }
+      .comment a:link,
+      .comment a:visited { color: #828282; }
+      #comments-wrapper p { margin: 0; }
     </style>
   </head>
   <body>
@@ -36,7 +37,7 @@
         <tr>
           <td></td>
           <td style="text-align: center;">
-            <form action="/hn/best-of-ebook" method="POST">
+            <form action="" method="POST" id="target">
               The best
               <!-- <select name="filter" id="filter"> -->
               <!--   <option value="best">best</option> -->
@@ -55,21 +56,27 @@
               
               
               comments by <input type="text" id="username" name="username">
-              <input type="submit" onclick="hn.generateChart();return false;" value="Show" />
-              <input type="submit" value="PDF E-book" />
+              <input name="show-html" type="submit" onclick="hn.generateChart();return false;" value="Show" />
+              <input name="show-pdf" type="button" onclick="$('#target').submit();" value="PDF E-book" />
             </form>
           </td>
-          <td style="text-align: right; padding-right: 20px; color: white;">
-            <a href="https://github.com/pdfcrowd/hnstuff">source</a>|<a href="mailto:redpill27@gmail.com">feeback</a></td>
+          <td style="text-align: right; padding-right: 20px; color: white;">about</td>
         </tr>
       </table>
     </div>
+
+    <div id="error">
+      <% if (c.error !== undefined) { %>
+        <span><%= c.error %></span>
+      <% } %>
+    </div>
+
     
     <div id="body-wrapper">
       <div id="chart" style="display:none">
         <h3>Distribution of Comments</h3>
-        <p>The marker size is proportional to the comment length.</p>
         <img usemap="#chart-map"></img><br/>
+        <p style="font-size: smaller; color: #888;">The marker size is proportional to the comment length.</p>
       </div>
     
       <div id="comments-wrapper">
@@ -80,8 +87,8 @@
     </div>
       
      <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-     <script type="text/javascript" src="js/underscore-min.js"></script>
-     <script type="text/javascript" src="js/hncharts.js"></script>
-     <script type="text/javascript" src="/js/comment_charts.js"></script>
+     <script type="text/javascript" src="/hn/js/underscore-min.js"></script>
+     <script type="text/javascript" src="/hn/js/hncharts.js"></script>
+     <script type="text/javascript" src="/hn/js/comment_charts.js"></script>
   </body>
 </html>

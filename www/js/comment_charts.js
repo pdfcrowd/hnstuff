@@ -18,6 +18,7 @@ var hn = {
         this.scriptNode.type = 'text/javascript';
         this.scriptNode.src = "http://api.thriftdb.com/api.hnsearch.com/items/_search?callback=hn.onSearchComplete&" + qs;
         $("body").append(this.scriptNode);
+        $('#error').empty();
     },
 
 
@@ -31,6 +32,8 @@ var hn = {
         $("#comments-wrapper").empty();
         if (data.hits === 0) {
             $("#chart").css("display", "none");
+            $("<span>No comments found</span>").appendTo($("#error"));
+
             return;
         }
         // retrieve the img map from the server
@@ -83,6 +86,7 @@ $(function() {
     _.bindAll(hn);
     hn.init();
     $('#username').focus();
+    $('form').submit(function() { $('#error').empty(); });
 });
 
 

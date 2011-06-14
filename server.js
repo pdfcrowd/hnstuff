@@ -21,7 +21,7 @@ var reportTemplate, indexTemplate, reportHeader, reportFooter, cfg;
 function readStaticResources() {
     console.log('reading config & layouts');
     reportTemplate = _.template(fs.readFileSync(__dirname + '/layout/report.rhtml').toString());
-    indexTemplate = _.template(fs.readFileSync(__dirname + '/layout/index.rhtml').toString());
+    indexTemplate = _.template(fs.readFileSync(__dirname + '/layout/best-of.rhtml').toString());
     reportHeader = _.template(fs.readFileSync(__dirname + '/layout/header.rhtml').toString());
     reportFooter = _.template(fs.readFileSync(__dirname + '/layout/footer.rhtml').toString());
     cfg = JSON.parse(fs.readFileSync('config.json'));
@@ -74,7 +74,7 @@ app.get("/hn/chart-map.json", function(req, res) {
 
 //
 // ebook main GET
-app.get("/hn/best-of-ebook", function(req, res) {
+app.get("/hn/best-of-pdf-ebook", function(req, res) {
     res.end(indexTemplate(getTemplateContext(req)));
 });
 
@@ -92,7 +92,7 @@ function getTemplateContext(req) {
 
 //
 // create ebook
-app.post("/hn/best-of-ebook", function(req, res) {
+app.post("/hn/best-of-pdf-ebook", function(req, res) {
     m = checkUsername.exec(req.body.username);
     if (m === null) {
         renderErrorResponse(req, res, "Enter a valid username");
