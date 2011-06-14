@@ -82,6 +82,7 @@ var hn = {
 $(function() {
     _.bindAll(hn);
     hn.init();
+    $('#username').focus();
 });
 
 
