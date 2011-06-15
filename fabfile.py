@@ -21,7 +21,8 @@ def stage():
 
 
 def prod():
-    pass
+    env.user = 'user'
+    env.hosts = ['bitovod.com']
 
 
 def status():
@@ -29,6 +30,8 @@ def status():
 
 
 def setup():
+    sudo('mkdir -p /var/www/bitovod.com')
+    sudo('chown %(user)s:www-data /var/www/bitovod.com' % env)
     with cd(env.www_root):
         run('git clone git://github.com/pdfcrowd/hnstuff.git')
         run('mkdir -p %(cache_dir)s' % env)
