@@ -104,7 +104,7 @@ app.post("/hn/best-of-pdf-ebook", function(req, res) {
     }
     var username = m[1];
 
-    sendCachedPDF(res, username, function(sent) {
+    sendCachedPDF(res, username, req.param('limit', 100), function(sent) {
         if (sent === false) {
             // the requested pdf is not cached
             processReportRequest(req, res, username, function(reportData) {
@@ -136,7 +136,7 @@ function processReportRequest(req, res, username, onDone) {
             "filter[fields][username][]" : username,
             "filter[fields][type][]" : "comment",
             "sortby" : "points desc",
-            "limit" : 100
+            "limit" : req.param('limit', 100)
         },
         parser: rest.parsers.json
     }).on('error', function() {
@@ -209,8 +209,8 @@ function processReportRequest(req, res, username, onDone) {
     });
 }
 
-function getPdfNames(username) {
-    username = (username !== '') ? username : 'Hacker News';
+function getPdfNames(username, limit) {
+    username = ((username !== '') ? username : 'Hacker News') + "-" + limit;
     return {
         pdf: username + '.pdf',
         cachedPath: reportCacheDir + username + '.pdf'
@@ -220,8 +220,8 @@ function getPdfNames(username) {
 //
 // send the cached version and return true; if the pdf is not in the
 // cache then return false
-function sendCachedPDF(res, username, callback) {
-    name = getPdfNames(username);
+function sendCachedPDF(res, username, limit, callback) {
+    name = getPdfNames(username, limit);
     if (cfg.useCache) {
         var cachedPdfStream = fs.createReadStream(name.cachedPath);
         cachedPdfStream.on('error', function(err) {
@@ -279,7 +279,7 @@ function sendPdfReport(req, res, reportData) {
                                        cfg.pdfcrowdAccount.apikey);
     client.convertHtml(reportTemplate(reportData), {
         pdf: function(pdfStream) {
-            var name = getPdfNames(reportData.username);
+            var name = getPdfNames(reportData.username, req.param('limit', 100));
             var cachedPdfStream = getCachedPdfWriteStream(name);
             sendPdfHeaders(res, name.pdf);
             pdfStream.on('data', function(data) {
