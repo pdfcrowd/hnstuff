@@ -72,6 +72,11 @@ var hn = {
         $("#chart img").attr("src", imgUrl);
         $("#chart").css("display", "block");
         $("#comments-wrapper").html(this.commentsTemplate(data));
+        var username = data.request.results[0].item.username;
+        var limit = data.request.filter.username[0];
+        $("#permalink").html('[<a href="http://bitovod.com/hn/best-of?username=' + username +
+                             '&limit=' + parseInt(limit,10) + '">permalink</a>]');
+        
     },
 
     initializeFormFromQs: function() {
