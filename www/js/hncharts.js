@@ -9,12 +9,22 @@ var hncharts = {
         this.milisecMonth = 1000 * 60 * 60 * 24 * 31;
         this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        
+        this.dateStringNormalizer = function(d) { return d; }
+        if (typeof($) !== 'undefined' && $.browser.msie === true) {
+            this.dateStringNormalizer = function(d) {
+                return [[d.substring(8, 10),
+                         d.substring(5, 7),
+                         d.substring(0, 4)].join('/'),
+                        d.substring(11, 19),
+                        'GMT +0000'].join(' ');
+            }
+        }
     },
 
-
     generateDateLabels: function(start, end, num) {
-        function normalize(date) {
-            var normalizedDate = new Date(date);
+        function normalize(millisecs) {
+            var normalizedDate = new Date(millisecs);
             normalizedDate.setUTCDate(1);
             normalizedDate.setUTCHours(0, 0, 0, 0);
             return normalizedDate;
@@ -32,11 +42,11 @@ var hncharts = {
         var arr = [];
         var startDate = 1e+30;
         var endDate = 0;
-        
+
         // search API results -> [[date, points, commentLength], ...]
         _.each(data.results, function(r) {
             if (r.item.points !== null) {
-                var date = new Date(r.item.create_ts)
+                var date = new Date(that.dateStringNormalizer(r.item.create_ts));
                 
                 if (date.getTime() < startDate) {
                     startDate = date.getTime();
