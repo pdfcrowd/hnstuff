@@ -65,13 +65,14 @@ var hn = {
         while (e = r.exec(q))
             urlParams[d(e[1])] = d(e[2]);
 
-        if (urlParams.username !== undefined) {
-            $('#username').val(urlParams.username);
-        }
-
+        $('#username').val((urlParams.username !== undefined) ? urlParams.username : "pg");
         if (urlParams.limit !== undefined) {
             $('#limit').val(urlParams.limit);
         }
+    },
+
+    generatePdf: function() {
+        $('#target').submit();
     },
 
 
@@ -108,7 +109,11 @@ $(function() {
     hn.init();
     $('#username').focus();
     $('form').submit(function() { $('#error-box').empty(); });
-    hn.generateChart();
+
+    // generate the chart only if the server is not sending an error message
+    if ($("#error-box span").length === 0 ) {
+        hn.generateChart();
+    }
 });
 
 
