@@ -79,10 +79,12 @@ app.get("/hn/chart-map.json", function(req, res) {
 //
 // ebook main GET
 app.get("/hn/best-of", function(req, res) {
+    res.setHeader("Content-Type", "text/html; charset=UTF-8");
     res.end(indexTemplate(getTemplateContext(req)));
 });
 
 function renderErrorResponse(req, res, err) {
+    res.setHeader("Content-Type", "text/html; charset=UTF-8");
     var ctx = getTemplateContext(req);
     ctx.c.error = err;
     res.end(indexTemplate(ctx));
