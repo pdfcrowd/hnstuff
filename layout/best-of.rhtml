@@ -13,7 +13,7 @@
 
       #form-wrapper a:link,
       #form-wrapper a:visited { color: white; text-decoration: none }
-      #form a:hover { text-decoration: underline; }
+      #form-wrapper a:hover { text-decoration: underline; }
 
       #about { background-color:white; border:1px solid #ccc;display:none;
                text-align:center;padding: .75em 0;font-size:smaller; color: #222; background-color: #e4e4ce;}
@@ -22,8 +22,8 @@
       #about  a:visited { color: #222;text-decoration: none; }
       #about  a:hover { text-decoration: underline; }
 
-      #error { font-size:smaller; font-weight:bold; text-align: center; margin-top: 1.5em; }
-      #error span { background-color: red; color:white; padding: 4px 5px;}
+      .error { font-size:smaller; font-weight:bold; text-align: center; margin-top: 1.5em; }
+      .error span { background-color: red; color:white; padding: 4px 5px;}
 
       #comments-wrapper { font-size: 10pt; color: black; margin-top: 1.5em; }
       .comment { margin-bottom: 3em; }
@@ -73,11 +73,17 @@
       <a href="http://pdfcrowd.com/html-to-pdf-api/">pdfcrowd</a>
     </div>
 
-    <div id="error">
+    <div class="error">
       <% if (c.error !== undefined) { %>
         <span><%= c.error %></span>
       <% } %>
     </div>
+
+    <noscript>
+      <div class="error">
+        <span>This page requires JavaScript enabled.</span>
+      </div>
+    </noscript>
 
     
     <div id="body-wrapper">
