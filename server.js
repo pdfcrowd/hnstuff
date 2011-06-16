@@ -78,7 +78,7 @@ app.get("/hn/chart-map.json", function(req, res) {
 
 //
 // ebook main GET
-app.get("/hn/best-of-pdf-ebook", function(req, res) {
+app.get("/hn/best-of", function(req, res) {
     res.end(indexTemplate(getTemplateContext(req)));
 });
 
@@ -96,7 +96,7 @@ function getTemplateContext(req) {
 
 //
 // create ebook
-app.post("/hn/best-of-pdf-ebook", function(req, res) {
+app.post("/hn/best-of", function(req, res) {
     m = checkUsername.exec(req.body.username);
     if (m === null) {
         renderErrorResponse(req, res, "Enter a valid username");
