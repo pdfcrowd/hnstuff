@@ -87,6 +87,7 @@ $(function() {
     hn.init();
     $('#username').focus();
     $('form').submit(function() { $('#error-box').empty(); });
+    hn.generateChart();
 });
 
 
