@@ -56,6 +56,7 @@ var hn = {
 
 
     init: function() {
+        $("#about").hide(); 
         this.imageMapTemplate = _.template('<map name="chart-map" id="chart-map"> \
   <% _.each(data, function(r, i) { %> \
   <area name="<%= r.name %>" shape="CIRCLE" coords="<%= r.coords.join(",") %>" href="#c<%= i+1 %>"  title="#<%= i+1 %>"> \
