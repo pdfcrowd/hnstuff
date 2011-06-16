@@ -54,8 +54,29 @@ var hn = {
         $("#comments-wrapper").html(this.commentsTemplate(data));
     },
 
+    initializeFormFromQs: function() {
+        // http://stackoverflow.com/questions/901115/get-query-string-values-in-javascript/2880929#2880929
+        var urlParams = {};
+        var e,
+        a = /\+/g,  // Regex for replacing additional symbol with a space
+        r = /([^&=]+)=?([^&]*)/g,
+        d = function (s) { return decodeURIComponent(s.replace(a, " ")); },
+        q = window.location.search.substring(1);
+        while (e = r.exec(q))
+            urlParams[d(e[1])] = d(e[2]);
+
+        if (urlParams.username !== undefined) {
+            $('#username').val(urlParams.username);
+        }
+
+        if (urlParams.limit !== undefined) {
+            $('#limit').val(urlParams.limit);
+        }
+    },
+
 
     init: function() {
+        this.initializeFormFromQs();
         this.imageMapTemplate = _.template('<map name="chart-map" id="chart-map"> \
   <% _.each(data, function(r, i) { %> \
   <area name="<%= r.name %>" shape="CIRCLE" coords="<%= r.coords.join(",") %>" href="#c<%= i+1 %>"  title="#<%= i+1 %>"> \
