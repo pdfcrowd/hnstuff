@@ -97,7 +97,7 @@ function getTemplateContext(req) {
 //
 // create ebook
 app.post("/hn/best-of", function(req, res) {
-    m = checkUsername.exec(req.body.username);
+    m = checkUsername.exec(req.param('username', ''));
     if (m === null) {
         renderErrorResponse(req, res, "Enter a valid username");
         return;
@@ -108,7 +108,7 @@ app.post("/hn/best-of", function(req, res) {
         if (sent === false) {
             // the requested pdf is not cached
             processReportRequest(req, res, username, function(reportData) {
-                if (req.body.output === 'html') {
+                if (req.param('output', 'pdf') === 'html') {
                     res.end(reportTemplate(reportData));
                 } else {
                     // create, cache and send pdf
