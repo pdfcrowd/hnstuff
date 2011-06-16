@@ -99,6 +99,11 @@ function getTemplateContext(req) {
 //
 // create ebook
 app.post("/hn/best-of", function(req, res) {
+    // quick fix: delete username & limit from the query string since
+    // req.param() searches req.query first (we need the fields from
+    // req.body)
+    delete req.query.username;
+    delete req.query.limit;
     m = checkUsername.exec(req.param('username', ''));
     if (m === null) {
         renderErrorResponse(req, res, "Enter a valid username");
