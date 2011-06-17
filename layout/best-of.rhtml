@@ -22,8 +22,7 @@
                text-align:center; padding: .75em 0;font-size:smaller; color: #444; background-color: #e4e4ce;}
 
       #about  a:link,
-      #about  a:visited { color: #222;text-decoration: none; }
-      #about  a:hover { text-decoration: underline; }
+      #about  a:visited { color: #222; }
 
       .error { font-size:smaller; font-weight:bold; text-align: center; margin-top: 1.5em; }
       .error span { background-color: red; color:white; padding: 4px 5px;}
@@ -73,8 +72,8 @@
                 <option value="100" selected>100</option>
               </select>
               comments by <input type="text" id="username" name="username">
-              <input name="show-html" type="submit" onclick="hn.generateChart();return false;" value="Show" />
-              <input name="show-pdf" type="button" onclick="$('#target').submit();" value="PDF E-book" />
+              <input class="not-field" name="show-html" type="submit" onclick="hn.generateChart(); return false;" value="Show" />
+              <input class="not-field" name="show-pdf" type="button" onclick="$('#target').submit();" value="PDF E-book" />
             </form>
           </td>
           <td style="text-align: right; padding-right: 20px; color: white;"><a href="#" onclick="$('#about').slideToggle(300);return false;">about</a></td>
@@ -87,7 +86,7 @@
       <a href="http://www.hnsearch.com/api">hnsearch</a> and 
       <a href="http://pdfcrowd.com/html-to-pdf-api/">pdfcrowd</a> |
       <a href="https://github.com/pdfcrowd/hnstuff">source</a> |
-      feedback: redpill27@gmail.com 
+      feedback: <a href="mailto:redpill27@gmail.com">redpill27@gmail.com</a>
     </div>
 
     <div id="error-box" class="error">
