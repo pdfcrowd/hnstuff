@@ -10,7 +10,7 @@ var hncharts = {
         this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         
-        this.dateStringNormalizer = Date.parse;
+        this.dateStringNormalizer = function(ds) { return new Date(Date.parse(ds)); }
         if (typeof(Date.parseExact) !== 'undefined') {
             this.dateStringNormalizer = function(ds) {
                 var d = Date.parseExact(ds, "yyyy-MM-ddTHH:mm:ssZ");
