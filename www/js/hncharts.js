@@ -10,14 +10,12 @@ var hncharts = {
         this.months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         
-        this.dateStringNormalizer = function(d) { return d; }
-        if (typeof($) !== 'undefined' && $.browser.msie === true) {
-            this.dateStringNormalizer = function(d) {
-                return [[d.substring(8, 10),
-                         d.substring(5, 7),
-                         d.substring(0, 4)].join('/'),
-                        d.substring(11, 19),
-                        'GMT +0000'].join(' ');
+        this.dateStringNormalizer = Date.parse;
+        if (typeof(Date.parseExact) !== 'undefined') {
+            this.dateStringNormalizer = function(ds) {
+                var d = Date.parseExact(ds, "yyyy-MM-ddTHH:mm:ssZ");
+                d.add({minutes: -d.getTimezoneOffset()});
+                return d;
             }
         }
     },
@@ -46,7 +44,7 @@ var hncharts = {
         // search API results -> [[date, points, commentLength], ...]
         _.each(data.results, function(r) {
             if (r.item.points !== null) {
-                var date = new Date(that.dateStringNormalizer(r.item.create_ts));
+                var date = that.dateStringNormalizer(r.item.create_ts);
                 
                 if (date.getTime() < startDate) {
                     startDate = date.getTime();
