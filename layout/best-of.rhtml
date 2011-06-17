@@ -10,7 +10,7 @@
       #form-wrapper table { margin: 0; background-color: #f60; font-size: smaller; padding: 5px; }
       form { margin: 0; }
       h3 { color: #444; }
-      #chart { margin: 0 0 3em 0; }
+      #chart { margin: 0 0 1.5em 0; }
       #chart img { border: 1px solid #ddd; padding: 10px; background-color: white; }
       #chart, form { text-align: center; }
 
@@ -40,6 +40,9 @@
       .comment a:visited { color: #828282; }
       #comments-wrapper p { margin: 0; }
 
+      #permalink { font-size:smaller; color: #888; }
+      #permalink span { cursor: pointer; }
+      .perm-visible { display: none; }
   </style>
   
   <script type="text/javascript">
@@ -91,6 +94,16 @@
       feedback: <a href="mailto:redpill27@gmail.com">redpill27@gmail.com</a>
     </div>
 
+  
+    <div id="body-wrapper">
+
+    <div id="permalink">
+      <span class="perm-hidden" onClick="hn.showPermalink()">permalink</span>
+      <input class="perm-visible" readonly="readonly" type="text" value="" size="60";/> 
+      <span class="perm-visible">hide</span>
+    </div>
+
+
     <div id="error-box" class="error">
       <% if (c.error !== undefined) { %>
         <span><%= c.error %></span>
@@ -103,19 +116,13 @@
       </div>
     </noscript>
 
-    
-    <div id="body-wrapper">
       <div id="chart" style="display:none">
         <h3>Distribution of Comments</h3>
         <img usemap="#chart-map"></img><br/>
         <p style="font-size: smaller; color: #888;">The markers are clickable, the size is proportional to the comment length.</p>
       </div>
 
-
-
-      <div id="permalink" style="font-size:smaller; color: #888">
-      </div>
-    
+   
       <div id="comments-wrapper">
 
       </div>

@@ -72,11 +72,10 @@ var hn = {
         $("#chart img").attr("src", imgUrl);
         $("#chart").css("display", "block");
         $("#comments-wrapper").html(this.commentsTemplate(data));
-        var username = data.request.results[0].item.username;
-        var limit = data.request.filter.username[0];
-        $("#permalink").html('[<a href="http://bitovod.com/hn/best-of?username=' + username +
-                             '&limit=' + parseInt(limit,10) + '">permalink</a>]');
-        
+
+        var data = this.formFieldsToDict();
+        var qs = _.map(data, function(val, field) { return field + '=' + val; }).join('&');
+        $("#permalink input").val("http://bitovod.com/hn/best-of?" + qs);
     },
 
     initializeFormFromQs: function() {
@@ -98,8 +97,37 @@ var hn = {
         }
     },
 
+
+
+    showPermalink: function() {
+        $(".perm-hidden").hide();
+        $(".perm-visible").show().focus().select();
+    },
+
+    hidePermalink: function() {
+        $(".perm-hidden").show();
+        $(".perm-visible").hide();
+    },
+
+
     init: function() {
+        this.loadTemplates();
         this.initializeFormFromQs();
+
+        $('#username').focus().select();
+        $('form').submit(function() { $('#error-box').empty(); });
+        
+        // generate the chart only if the server is not sending an error message
+        if ($("#error-box span").length === 0 ) {
+            hn.generateChart();
+        }
+
+        $("#permalink input").focusout(function() {
+            hn.hidePermalink();
+        });
+    },
+
+    loadTemplates: function() {
         this.imageMapTemplate = _.template('<map name="chart-map" id="chart-map"> \
   <% _.each(data, function(r, i) { %> \
   <area name="<%= r.name %>" shape="CIRCLE" coords="<%= r.coords.join(",") %>" href="#c<%= i+1 %>"  title="#<%= i+1 %>"> \
@@ -129,13 +157,6 @@ var hn = {
 $(function() {
     _.bindAll(hn);
     hn.init();
-    $('#username').focus();
-    $('form').submit(function() { $('#error-box').empty(); });
-
-    // generate the chart only if the server is not sending an error message
-    if ($("#error-box span").length === 0 ) {
-        hn.generateChart();
-    }
 });
 
 
