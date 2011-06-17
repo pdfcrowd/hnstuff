@@ -6,9 +6,14 @@
 var hn = {
     formFieldsToDict: function() {
         var data = {};
-        _.each($(document.forms[0].elements).not('[class="not-field"]'), function(e) {
-            data[e.name] = e.value;
+
+        $(':input', '#target').not('[class="not-field"]').each(function(){
+            data[this.name] = this.value;
         });
+
+        // _.each($(document.forms[0].elements).not('[class="not-field"]'), function(e) {
+        //     data[e.name] = e.value;
+        // });
 
         return data;
     },
@@ -37,8 +42,6 @@ var hn = {
         this.scriptNode.src = "http://api.thriftdb.com/api.hnsearch.com/items/_search?callback=hn.onSearchComplete&" + qs;
         $("body").append(this.scriptNode);
         $('#error-box').empty();
-
-        return data;
     },
 
 
