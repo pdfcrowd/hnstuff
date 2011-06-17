@@ -42,8 +42,10 @@
       .comment a:visited { color: #828282; }
       #comments-wrapper p { margin: 0; }
 
+      #right-menu { text-align: right; color: white; padding-right: 20px;}
+      #right-menu span { cursor: pointer; }
+
       #permalink { font-size:smaller; color: #888; }
-      #permalink span { cursor: pointer; }
   </style>
   
   <script type="text/javascript">
@@ -65,9 +67,6 @@
       <table width="100%" cellspacing="0">
         <tr>
           <td style="text-align:left;width:20%">
-            <span style="padding-left: 20px; color:white; cursor:pointer" 
-                  onclick="hn.togglePermalink();">permalink
-            </span>
           </td>
           <td style="text-align: center;width:60%">
             <form action="" method="POST" id="target">
@@ -81,11 +80,13 @@
               </select>
               comments by <input type="text" id="username" name="username">
               <input class="not-field" name="show-html" type="submit" onclick="hn.generateChart(); return false;" value="Show" />
-              <input class="not-field" name="show-pdf" type="button" onclick="$('#target').submit();" value="PDF E-book" />
+              <input class="not-field" name="show-pdf" type="button" onclick="$('#target').submit();" value="PDF eBook" />
             </form>
           </td>
-          <td style="text-align: right;width:20%">
-            <span style="padding-right: 20px; color: white; cursor:pointer" onclick="$('#about').slideToggle(300)">about</span>
+          <td id="right-menu" style="width:20%">
+            <span onclick="hn.togglePermalink();">permalink</span> |
+            <span onclick="">button</span> |
+            <span onclick="$('#about').slideToggle(300)">about</span>
           </td>
         </tr>
       </table>
