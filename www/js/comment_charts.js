@@ -76,6 +76,9 @@ var hn = {
         var data = this.formFieldsToDict();
         var qs = _.map(data, function(val, field) { return field + '=' + val; }).join('&');
         $("#permalink input").val("http://bitovod.com/hn/best-of?" + qs);
+        var button = this.bestOfButton({qs: qs, data: data});
+        $("#bestof-button textarea").val(button);
+        $("#best-of-button-example").html(button);
     },
 
     initializeFormFromQs: function() {
@@ -102,6 +105,14 @@ var hn = {
             if ($('#permalink').is(':visible')) {
                 $('#permalink input').focus().select();
         }
+        });
+    },
+
+    toggleBestOfButton: function() {
+        $('#bestof-button').slideToggle(200, function() {
+            if ($('#bestof-button').is(':visible')) {
+                $('#bestof-button textarea').focus().select();
+            }
         });
     },
 
@@ -143,6 +154,13 @@ var hn = {
       </div> \
     </div> \
     <% }); %>');
+
+        this.bestOfButton = _.template([
+            '<a href="http://bitovod.com/hn/best-of?<%= qs %>"',
+            '   title="The best of <%= data.username %> on Hacker News">',
+            '  <img style="border:none"',
+            '       src="http://s3.bitovod.com/hn/bestof.png"/>',
+            '</a>'].join('\n'));
     }
 };
 

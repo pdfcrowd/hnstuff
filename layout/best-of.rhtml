@@ -35,15 +35,13 @@
       .comment-header  a:link,
       .comment-header  a:visited { color: #828282; text-decoration: none; }
       .comment-header a:hover { text-decoration: underline; }
-
-
       .comment-rank { font-weight: bold; color: #444; }
       .comment a:link,
       .comment a:visited { color: #828282; }
       #comments-wrapper p { margin: 0; }
 
-      #right-menu { text-align: right; color: white; padding-right: 20px;}
-      #right-menu span { cursor: pointer; }
+      #menu { text-align: right; color: white; padding-right: 20px;}
+      #menu span { cursor: pointer; }
 
       #permalink { font-size:smaller; color: #888; }
   </style>
@@ -83,10 +81,10 @@
               <input class="not-field" name="show-pdf" type="button" onclick="$('#target').submit();" value="PDF eBook" />
             </form>
           </td>
-          <td id="right-menu" style="width:20%">
+          <td id="menu" style="width:20%">
             <span onclick="hn.togglePermalink();">permalink</span> |
-            <span onclick="">button</span> |
-            <span onclick="$('#about').slideToggle(300)">about</span>
+            <span onclick="hn.toggleBestOfButton();">button</span> |
+            <span onclick="$('#about').slideToggle(300);">about</span>
           </td>
         </tr>
       </table>
@@ -101,15 +99,24 @@
     </div>
 
     <div id="permalink" class="sliding-panel">
-      <!-- <span class="perm-hidden" onClick="hn.showPermalink()">permalink</span> -->
       <input class="perm-visible" readonly="readonly" type="text" value="" size="60";/> 
-      <!-- <span class="perm-visible">hide</span> -->
+    </div>
+
+    <div id="permalink" class="sliding-panel">
+      <input class="perm-visible" readonly="readonly" type="text" value="" size="60";/> 
+    </div>
+
+    <div id="bestof-button" class="sliding-panel">
+      <textarea rows="5" cols="80" readonly="readonly">
+        <a href="">..
+      </textarea>
+      <div id="best-of-button-example" style="padding: 1.5em 0 .75em 0;">
+      </div>
     </div>
 
 
   
     <div id="body-wrapper">
-
 
 
     <div id="error-box" class="error">
