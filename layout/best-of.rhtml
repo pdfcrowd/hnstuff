@@ -18,8 +18,10 @@
       #form-wrapper a:visited { color: white; text-decoration: none }
       #form-wrapper a:hover { text-decoration: underline; }
 
-      #about { background-color:white; border-bottom:1px solid #ccc; display:none;
+      .sliding-panel { background-color:white; border-bottom:1px solid #ccc; display:none;
                text-align:center; padding: .75em 0;font-size:smaller; color: #444; background-color: #e4e4ce;}
+
+      
 
       #about  a:link,
       #about  a:visited { color: #222; }
@@ -42,7 +44,6 @@
 
       #permalink { font-size:smaller; color: #888; }
       #permalink span { cursor: pointer; }
-      .perm-visible { display: none; }
   </style>
   
   <script type="text/javascript">
@@ -63,8 +64,12 @@
     <div id="form-wrapper">
       <table width="100%" cellspacing="0">
         <tr>
-          <td></td>
-          <td style="text-align: center;">
+          <td style="text-align:left;width:20%">
+            <span style="padding-left: 20px; color:white; cursor:pointer" 
+                  onclick="hn.togglePermalink();">permalink
+            </span>
+          </td>
+          <td style="text-align: center;width:60%">
             <form action="" method="POST" id="target">
               The best
               <select name="limit" id="limit">
@@ -79,14 +84,14 @@
               <input class="not-field" name="show-pdf" type="button" onclick="$('#target').submit();" value="PDF E-book" />
             </form>
           </td>
-          <td style="text-align: right;">
-            <span style="padding-right: 20px; color: white; cursor:pointer" onclick="$('#about').slideToggle(300);return false;">about</span>
+          <td style="text-align: right;width:20%">
+            <span style="padding-right: 20px; color: white; cursor:pointer" onclick="$('#about').slideToggle(300)">about</span>
           </td>
         </tr>
       </table>
     </div>
 
-    <div id="about">
+    <div id="about" class="sliding-panel">
       powered by 
       <a href="http://www.hnsearch.com/api">hnsearch</a> and 
       <a href="http://pdfcrowd.com/html-to-pdf-api/">pdfcrowd</a> |
@@ -94,14 +99,16 @@
       feedback: <a href="mailto:redpill27@gmail.com">redpill27@gmail.com</a>
     </div>
 
+    <div id="permalink" class="sliding-panel">
+      <!-- <span class="perm-hidden" onClick="hn.showPermalink()">permalink</span> -->
+      <input class="perm-visible" readonly="readonly" type="text" value="" size="60";/> 
+      <!-- <span class="perm-visible">hide</span> -->
+    </div>
+
+
   
     <div id="body-wrapper">
 
-    <div id="permalink">
-      <span class="perm-hidden" onClick="hn.showPermalink()">permalink</span>
-      <input class="perm-visible" readonly="readonly" type="text" value="" size="60";/> 
-      <span class="perm-visible">hide</span>
-    </div>
 
 
     <div id="error-box" class="error">

@@ -97,16 +97,12 @@ var hn = {
         }
     },
 
-
-
-    showPermalink: function() {
-        $(".perm-hidden").hide();
-        $(".perm-visible").show().focus().select();
-    },
-
-    hidePermalink: function() {
-        $(".perm-hidden").show();
-        $(".perm-visible").hide();
+    togglePermalink: function() {
+        $('#permalink').slideToggle(300, function() {
+            if ($('#permalink').is(':visible')) {
+                $('#permalink input').focus().select();
+        }
+        });
     },
 
 
@@ -122,9 +118,6 @@ var hn = {
             hn.generateChart();
         }
 
-        $("#permalink input").focusout(function() {
-            hn.hidePermalink();
-        });
     },
 
     loadTemplates: function() {
