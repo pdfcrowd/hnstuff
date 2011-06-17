@@ -4,21 +4,41 @@
 //
 
 var hn = {
-    generateChart: function() {
-        var username = $('#username').val();
-        var fields = [
-            "filter[fields][username][]=" + username,
+    formFieldsToDict: function() {
+        var data = {};
+        _.each($(document.forms[0].elements).not('[class="not-field"]'), function(e) {
+            data[e.name] = e.value;
+        });
+
+        return data;
+    },
+
+    formSearchQS: function(data) {
+        return [
+            "filter[fields][username][]=" + data.username,
             "filter[fields][type][]=comment",
             "sortby=points desc",
-            "limit=" + parseInt($("#limit").val(),10)
-        ];
-        var qs = fields.join('&');
+            "limit=" + parseInt(data.limit)
+        ].join('&');
+    },
+
+    updateLocation: function(data) {
+        window.location.search = '?' + 
+            _.map(data, function(val, field) { return field + '=' + val; }).join('&');
+    },
+
+
+    generateChart: function() {
+        var data = this.formFieldsToDict();
+        var qs = this.formSearchQS(data);
 
         this.scriptNode = document.createElement('script');
         this.scriptNode.type = 'text/javascript';
         this.scriptNode.src = "http://api.thriftdb.com/api.hnsearch.com/items/_search?callback=hn.onSearchComplete&" + qs;
         $("body").append(this.scriptNode);
         $('#error-box').empty();
+
+        return data;
     },
 
 
@@ -65,16 +85,13 @@ var hn = {
         while (e = r.exec(q))
             urlParams[d(e[1])] = d(e[2]);
 
+        // if there is no username field then use the default one, if
+        // it is there but is empty then leave it empty
         $('#username').val((urlParams.username !== undefined) ? urlParams.username : "pg");
         if (urlParams.limit !== undefined) {
             $('#limit').val(urlParams.limit);
         }
     },
-
-    generatePdf: function() {
-        $('#target').submit();
-    },
-
 
     init: function() {
         this.initializeFormFromQs();
