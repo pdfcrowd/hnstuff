@@ -53,12 +53,14 @@ var hn = {
         $(this.scriptNode).detach();
         $("#chart-map").detach();
         $("#comments-wrapper").empty();
+        $("#twitter-wrapper").hide();
+
         if (data.hits === 0) {
             $("#chart").css("display", "none");
             $("<span>No comments found</span>").appendTo($("#error-box"));
-
             return;
         }
+
         // retrieve the img map from the server
         var imgQs = hncharts.commentLengthAndPoints(data, hncharts.getChartTitle(data));
         var imgUrl = "http://chart.googleapis.com/chart?" + imgQs
@@ -70,18 +72,52 @@ var hn = {
                 })).appendTo($("#chart"));
             }
         });
+
+        var formData = this.formFieldsToDict();
+        if (!_.isEmpty(formData.username)) {
+            this.loadTwitterProfileImage(formData.username);
+        }
+        
         // update the document
         $("#chart a").attr("href", imgUrl);
         $("#chart-img").attr("src", imgUrl);
-        $("#chart").css("display", "block");
+        $("#chart").fadeIn();
         $("#comments-wrapper").html(this.commentsTemplate(data));
 
-        var data = this.formFieldsToDict();
-        var qs = _.map(data, function(val, field) { return field + '=' + val; }).join('&');
+        var qs = _.map(formData, function(val, field) { return field + '=' + val; }).join('&');
         $("#permalink input").val("http://bitovod.com/hn/best-of?" + qs);
-        var button = this.bestOfButton({qs: qs, data: data});
+        var button = this.bestOfButton({qs: qs, data: formData});
         $("#bestof-button textarea").val(button);
         $("#best-of-button-example").html(button);
+    },
+
+
+    loadTwitterProfileImage: function(username) {
+        // call the search API
+        var that = this;
+        $.ajax({
+            url: "http://api.thriftdb.com/api.hnsearch.com/users/_search?filter[fields][username][]=" + username,
+            dataType: "jsonp",
+            success: function(data) {
+                if (data.hits == 1) {
+                    var match = that.parseTwitterUsername.exec(data.results[0].item.about);
+                    if (match !== null) {
+                        var twitterUsername = match[1] ? match[1] : match[2];
+                        // call the twitter API
+                        $.ajax({
+                            url: "http://api.twitter.com/1/users/show.json?screen_name=" + twitterUsername, 
+                            dataType: "jsonp",
+                            success: function(data) {
+                                $("#twitter-wrapper img").attr("src", data.profile_image_url)
+                                $("#twitter-wrapper a").attr("href", "http://twitter.com/" + twitterUsername);
+                                $("#twitter-wrapper").fadeIn();
+                            }});
+                    }
+                }
+            }
+        });
+        
+        
     },
 
     initializeFormFromQs: function() {
@@ -121,6 +157,7 @@ var hn = {
 
 
     init: function() {
+        this.parseTwitterUsername = /twitter.com\/([a-zA-Z0-9_]{1,15})| @([a-zA-Z0-9_]{1,15})/i;
         this.loadTemplates();
         this.initializeFormFromQs();
 
