@@ -173,7 +173,7 @@ function processReportRequest(req, res, username, onDone) {
         if (data['hits'] == 1) {
             var match = parseTwitterUsername.exec(data.results[0].item.about);
             if (match !== null) {
-                twitterUsername = match[1] ? match[1] : match[2];
+                var twitterUsername = match[1] ? match[1] : match[2];
                 var req = http.request({
                     host: 'api.twitter.com',
                     port: 80,
