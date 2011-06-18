@@ -54,6 +54,7 @@ var hn = {
         $("#chart-map").detach();
         $("#comments-wrapper").empty();
         $("#twitter-wrapper").hide();
+        $("#twitter-wrapper img").removeAttr("src");
 
         if (data.hits === 0) {
             $("#chart").css("display", "none");
