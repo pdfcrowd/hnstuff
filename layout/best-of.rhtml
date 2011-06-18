@@ -5,13 +5,14 @@
   <meta name="description" content="The best comments on Hacker News, charts, PDF export.">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <style>
+
       body { font-family: verdana, sans-serif; background-color: #F6F6EF; padding: 0; margin: 0; height: 100%;}
       #body-wrapper { padding: 0 2em 1em 2em; }
       #form-wrapper table { margin: 0; background-color: #f60; font-size: smaller; padding: 5px; }
       form { margin: 0; }
       h3 { color: #444; }
+      #chart-img { border:none; }
       #chart { margin: 0 0 1.5em 0; }
-      #chart img { border: 1px solid #ddd; padding: 10px; background-color: white; }
       #chart, form { text-align: center; }
 
       #form-wrapper a:link,
@@ -20,8 +21,6 @@
 
       .sliding-panel { background-color:white; border-bottom:1px solid #ccc; display:none;
                text-align:center; padding: .75em 0;font-size:smaller; color: #444; background-color: #e4e4ce;}
-
-      
 
       #about  a:link,
       #about  a:visited { color: #222; }
@@ -44,6 +43,10 @@
       #menu span { cursor: pointer; }
 
       #permalink { font-size:smaller; color: #888; }
+
+      #chart-wrapper { border: 1px solid #ddd; background-color: white;
+                       padding: 10px; margin: 0 auto; width: 651px; position: relative; }
+      #twitter-wrapper img { position: absolute; display: block; border: none; right: 0; top: 0;}
   </style>
   
   <script type="text/javascript">
@@ -131,11 +134,18 @@
       </div>
     </noscript>
 
-      <div id="chart" style="display:none">
-        <h3>Distribution of Comments</h3>
-        <img usemap="#chart-map"></img><br/>
-        <p style="font-size: smaller; color: #888;">The markers are clickable, the size is proportional to the comment length.</p>
+    <div id="chart" style="display:none">
+      <h3>Distribution of Comments</h3>
+      <div id="chart-wrapper">
+        <img id="chart-img" usemap="#chart-map" />
+      <div id="twitter-wrapper">
+        <img src="http://a0.twimg.com/profile_images/1112174290/pg-railsconf_normal.jpg" />
       </div>
+      </div>
+      <div style="font-size: smaller; color: #888; margin-top: 1.5em;">
+        The markers are clickable, the size is proportional to the comment length.
+      </div>
+    </div>
 
    
       <div id="comments-wrapper">

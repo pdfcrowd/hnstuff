@@ -72,7 +72,7 @@ var hn = {
         });
         // update the document
         $("#chart a").attr("href", imgUrl);
-        $("#chart img").attr("src", imgUrl);
+        $("#chart-img").attr("src", imgUrl);
         $("#chart").css("display", "block");
         $("#comments-wrapper").html(this.commentsTemplate(data));
 
