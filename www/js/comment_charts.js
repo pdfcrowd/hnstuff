@@ -11,10 +11,6 @@ var hn = {
             data[this.name] = this.value;
         });
 
-        // _.each($(document.forms[0].elements).not('[class="not-field"]'), function(e) {
-        //     data[e.name] = e.value;
-        // });
-
         return data;
     },
 
