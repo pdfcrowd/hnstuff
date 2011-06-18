@@ -37,10 +37,12 @@ var hn = {
         var data = this.formFieldsToDict();
         var qs = this.formSearchQS(data);
 
-        this.scriptNode = document.createElement('script');
-        this.scriptNode.type = 'text/javascript';
-        this.scriptNode.src = "http://api.thriftdb.com/api.hnsearch.com/items/_search?callback=hn.onSearchComplete&" + qs;
-        $("body").append(this.scriptNode);
+        $.ajax({
+            url: "http://api.thriftdb.com/api.hnsearch.com/items/_search?" + qs,
+            dataType: "jsonp",
+            success: this.onSearchComplete
+        });
+                   
         $('#error-box').empty();
     },
 
