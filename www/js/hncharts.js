@@ -43,15 +43,19 @@ var hncharts = {
 
         // search API results -> [[date, points, commentLength], ...]
         _.each(data.results, function(r) {
-            if (r.item.points !== null) {
-                var date = that.dateStringNormalizer(r.item.create_ts);
+            
+            // Move the comment off the chart if the score is
+            // unknown. It can't be skiped because then we couldn't
+            // map the markers in the generated <map> back to the
+            // comments.
+            var points =  (r.item.points !== null) ? r.item.points : -99;
+            var date = that.dateStringNormalizer(r.item.create_ts);
                 
-                if (date.getTime() < startDate) {
-                    startDate = date.getTime();
-                } else if (date.getTime() > endDate) endDate = date.getTime();
+            if (date.getTime() < startDate) {
+                startDate = date.getTime();
+            } else if (date.getTime() > endDate) endDate = date.getTime();
                 
-                arr.push([date, r.item.points, r.item.text.length]);
-            }
+            arr.push([date, points, r.item.text.length]);
         });
 
         var points = _.map(arr, function(item) { return item[1]; });
