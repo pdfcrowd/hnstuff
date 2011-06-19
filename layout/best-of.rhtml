@@ -39,8 +39,9 @@
       .comment a:visited { color: #828282; }
       #comments-wrapper p { margin: 0; }
 
-      #menu { text-align: right; color: white; padding-right: 20px;}
-      #menu span { cursor: pointer; }
+      #menu { text-align: right; color: white; background-color: #993d00; line-height: 1.5; margin: 0; 
+              list-style-type: none; padding-right: 2em; }
+      #menu li { cursor: pointer; font-size: smaller; display: inline; padding-right:8px; }
 
       #permalink { font-size:smaller; color: #888; }
 
@@ -52,6 +53,24 @@
           -moz-box-shadow: 2px 2px 3px #aaa; 
           -webkit-box-shadow: 2px 2px 3px #aaa; 
       }
+
+      #bookmarklet a:link,
+      #bookmarklet a:visited {
+          background-color: #f60; 
+          color: white; 
+          padding: 8px 10px; 
+          text-decoration: none;
+          font-weight: bold;
+          border-radius: 5px;
+          -moz-border-radius: 5px;
+          -webkit-border-radius: 5px;
+          -khtml-border-radius: 5px;
+          box-shadow: 0 1px 3px #aaa;
+          -moz-box-shadow: 0 1px 3px #aaa;
+          -webkit-box-shadow: 0 1px 3px #aaa;
+          -khtml-box-shadow: 0 1px 3px #aaa;
+      }
+
   </style>
   
   <script type="text/javascript">
@@ -69,6 +88,13 @@
   </script>
   </head>
   <body>
+    <ul id="menu">
+      <li onclick="hn.togglePermalink();">permalink</li>
+      <li onclick="$('#bookmarklet').slideToggle(300);">bookmarklet</li>
+      <li onclick="hn.toggleBestOfButton();">button</li>
+      <li onclick="$('#about').slideToggle(300);">info</li>
+    </ul>
+
     <div id="form-wrapper">
       <table width="100%" cellspacing="0">
         <tr>
@@ -89,10 +115,7 @@
               <input class="not-field" name="show-pdf" type="button" onclick="$('#target').submit();" value="PDF eBook" />
             </form>
           </td>
-          <td id="menu" style="width:20%">
-            <span onclick="hn.togglePermalink();">permalink</span> |
-            <span onclick="hn.toggleBestOfButton();">button</span> |
-            <span onclick="$('#about').slideToggle(300);">about</span>
+          <td style="width:20%">
           </td>
         </tr>
       </table>
@@ -107,11 +130,21 @@
     </div>
 
     <div id="permalink" class="sliding-panel">
-      <input class="perm-visible" readonly="readonly" type="text" value="" size="60";/> 
+      <input readonly="readonly" type="text" value="" size="60";/> 
     </div>
 
-    <div id="permalink" class="sliding-panel">
-      <input class="perm-visible" readonly="readonly" type="text" value="" size="60";/> 
+    <div id="bookmarklet" class="sliding-panel">
+      <div style="margin: 0 auto; width: 640;">
+        Drag the button below to your browsers toolbar. When you are
+        on a user's account page, simply click the button to see
+        his/her best comments.
+      </div>
+      <br />
+      <a href="javascript: (function(){var m=window.location.href.match(/^http:\/\/news.ycombinator.com\/user\?id=([a-zA-Z0-9_-]+)$/); if(m) window.location.href='http://bitovod.com/hn/best-of?username=' + m[1];})()">
+          HN Best of
+      </a>
+      <br/>
+      <br/>
     </div>
 
     <div id="bestof-button" class="sliding-panel">
