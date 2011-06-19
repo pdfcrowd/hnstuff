@@ -48,7 +48,7 @@ var hncharts = {
             // unknown. It can't be skiped because then we couldn't
             // map the markers in the generated <map> back to the
             // comments.
-            var points =  (r.item.points !== null) ? r.item.points : -99;
+            var points =  (r.item.points !== null) ? r.item.points : -999;
             var date = that.dateStringNormalizer(r.item.create_ts);
                 
             if (date.getTime() < startDate) {
@@ -59,10 +59,11 @@ var hncharts = {
         });
 
         var points = _.map(arr, function(item) { return item[1]; });
-        var pointsMax = _.max(points);
+        var pointsMinMax = _.select(points, function(p) { return p !== -999 });;
+        var pointsMax = _.max(pointsMinMax);
         var pointsMax = _.max([0, pointsMax + 5]);
-        var pointsMin = _.min(points);
-        pointsMin = _.max([0, pointsMin - 5]);
+        var pointsMin = _.min(pointsMinMax);
+        pointsMin = (pointsMin < 0) ? pointsMin - 2 : _.max([0, pointsMin - 5]);
         var lengths = _.map(arr, function(item) { return 1000+item[2]; });
 
 
