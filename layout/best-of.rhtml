@@ -22,8 +22,12 @@
       .sliding-panel { background-color:white; border-bottom:1px solid #ccc; display:none;
                text-align:center; padding: .75em 0;font-size:smaller; color: #444; background-color: #e4e4ce;}
 
+      #about table { border: none; border-collapse: collapse; display: inline-table; font-size: smaller; }
+      #about td.col1 { text-align: right; padding-right: 1em; }
+      #about td.col2 { text-align: left; }
       #about  a:link,
       #about  a:visited { color: #222; }
+      
 
       .error { font-size:smaller; font-weight:bold; text-align: center; margin-top: 1.5em; }
       .error span { background-color: red; color:white; padding: 4px 5px;}
@@ -122,11 +126,26 @@
     </div>
 
     <div id="about" class="sliding-panel">
-      powered by 
-      <a href="http://www.hnsearch.com/api">hnsearch</a> and 
-      <a href="http://pdfcrowd.com/html-to-pdf-api/">pdfcrowd</a> |
-      <a href="https://github.com/pdfcrowd/hnstuff">source</a> |
-      feedback: <a href="mailto:redpill27@gmail.com">redpill27@gmail.com</a>
+      <table>
+        <tr>
+          <td class="col1">powered by</td>
+          <td class="col2">
+            <a href="http://www.hnsearch.com/api">hnsearch</a> and 
+            <a href="http://pdfcrowd.com/html-to-pdf-api/">pdfcrowd</a>
+          </td>
+        </tr>
+        <tr>
+          <td class="col1">source</td><td class="col2"><a href="https://github.com/pdfcrowd/hnstuff">https://github.com/pdfcrowd/hnstuff</a></td>
+        </tr>
+        <tr>
+          <td class="col1">feedback</td><td class="col2"><a href="mailto:redpill27@gmail.com">redpill27@gmail.com</a></td>
+        </tr>
+      </table>
+      <!-- powered by  -->
+      <!-- <a href="http://www.hnsearch.com/api">hnsearch</a> and  -->
+      <!-- <a href="http://pdfcrowd.com/html-to-pdf-api/">pdfcrowd</a> | -->
+      <!-- <a href="https://github.com/pdfcrowd/hnstuff">source</a> | -->
+      <!-- feedback: <a href="mailto:redpill27@gmail.com">redpill27@gmail.com</a> -->
     </div>
 
     <div id="permalink" class="sliding-panel">
