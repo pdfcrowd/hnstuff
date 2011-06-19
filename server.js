@@ -28,7 +28,7 @@ function readStaticResources() {
 }
 
 readStaticResources();
-var parseTwitterUsername = /twitter.com\/([a-zA-Z0-9_]{1,15})| @([a-zA-Z0-9_]{1,15})/i;
+var parseTwitterUsername = /twitter.com\/([a-zA-Z0-9_]{1,15})|[ >]@([a-zA-Z0-9_]{1,15})[^.]/i;
 var checkUsername = /^ *([a-zA-Z0-9_-]*) *$/;
 var reportCacheDir = __dirname + '/var/cached-reports/';
 var port = process.argv.length == 3 ? parseInt(process.argv[2], 10) : cfg.port;
