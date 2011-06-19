@@ -156,7 +156,7 @@ var hn = {
 
 
     init: function() {
-        this.parseTwitterUsername = /twitter.com\/([a-zA-Z0-9_]{1,15})| @([a-zA-Z0-9_]{1,15})/i;
+        this.parseTwitterUsername = /twitter.com\/([a-zA-Z0-9_]{1,15})|[ >]@([a-zA-Z0-9_]{1,15})[^.]/i;
         this.loadTemplates();
         this.initializeFormFromQs();
 
